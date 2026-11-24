@@ -1,13 +1,18 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import About from "./components/About/About";
-import Skills from "./components/Skills/Skills";
-import Experience from "./components/Experience/Experience";
+// import Skills from "./components/Skills/Skills";
+// import Experience from "./components/Experience/Experience";
 import Work from "./components/Work/Work";
-import Education from "./components/Education/Education";
-import Contact from "./components/Contact/Contact";
+// import Education from "./components/Education/Education";
+// import Contact from "./components/Contact/Contact";
 import Footer from "./components/Footer/Footer";
 import BlurBlob from './components/BlurBlob';
+
+const Experience = lazy(() => import("./components/Experience/Experience"));
+const Education = lazy(() => import("./components/Education/Education"));
+const Skills = lazy(() => import("./components/Skills/Skills"));
+const Contact = lazy(() => import("./components/Contact/Contact"));
 
 const App = () => {
   return (
@@ -20,11 +25,23 @@ const App = () => {
       <div className="relative pt-10">
         <Navbar />
         <About />
-        <Skills />
-        <Experience />
-        <Work />
-        <Education />
-        <Contact />
+        <Suspense fallback={<div className="text-center text-white">Loading skills...</div>}>
+          <Skills />
+          {/* <Experience /> */}
+        </Suspense>
+        <Suspense fallback={<div className="text-center text-white">Loading Experience...</div>}>
+          {/* <Skills /> */}
+          <Experience />
+        </Suspense>
+        <Suspense fallback={<div className="text-center text-white">Loading Work.........</div>}>
+          <Work />
+        </Suspense>
+        <Suspense fallback={<div className="text-center text-white">Loading Education...</div>}>
+          <Education />
+        </Suspense>
+        <Suspense fallback={<div className="text-center text-white">Loading Contact...</div>}>
+          <Contact />
+        </Suspense>
         <Footer />
       </div>
 
